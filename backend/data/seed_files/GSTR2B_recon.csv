@@ -1,0 +1,56 @@
+invoice_no,vendor_name,expected_status,taxable_2b,taxable_books
+APE/26-27/1002,Apex Cloud Services Pvt Ltd,MATCHED,720800,720800.0
+APE/26-27/1010,Apex Cloud Services Pvt Ltd,ONLY_IN_2B,437700,
+APE/26-27/1053,Apex Cloud Services Pvt Ltd,MATCHED,437700,437700.0
+CAT/26-27/1015,Catalyst Media & Communications Pvt Ltd,MATCHED,423100,423100.0
+CAT/26-27/1017,Catalyst Media & Communications Pvt Ltd,VALUE_MISMATCH,704000,760300.0
+CAT/26-27/1019,Catalyst Media & Communications Pvt Ltd,ONLY_IN_BOOKS,111700,111700.0
+CAT/26-27/1026,Catalyst Media & Communications Pvt Ltd,ONLY_IN_2B,386100,
+CAT/26-27/1036,Catalyst Media & Communications Pvt Ltd,ONLY_IN_2B,734300,
+CAT/26-27/1050,Catalyst Media & Communications Pvt Ltd,MATCHED,681800,681800.0
+LUM/26-27/1004,"Lumina & Associates, Chartered Accountants",MATCHED,562000,562000.0
+LUM/26-27/1013,"Lumina & Associates, Chartered Accountants",MATCHED,73000,73000.0
+LUM/26-27/1029,"Lumina & Associates, Chartered Accountants",ONLY_IN_BOOKS,143500,143500.0
+LUM/26-27/1032,"Lumina & Associates, Chartered Accountants",MATCHED,273700,273700.0
+LUM/26-27/1052,"Lumina & Associates, Chartered Accountants",MATCHED,493700,493700.0
+LUM/26-27/1054,"Lumina & Associates, Chartered Accountants",MATCHED,429900,429900.0
+MER/26-27/1005,Meridian Travels Pvt Ltd,MATCHED,651900,651900.0
+MER/26-27/1020,Meridian Travels Pvt Ltd,MATCHED,769300,769300.0
+MER/26-27/1023,Meridian Travels Pvt Ltd,MATCHED,555000,555000.0
+MER/26-27/1027,Meridian Travels Pvt Ltd,MATCHED,597200,597200.0
+MER/26-27/1033,Meridian Travels Pvt Ltd,MATCHED,666200,666200.0
+NIM/26-27/1014,Nimbus Tech Solutions Pvt Ltd,MATCHED,623100,623100.0
+NIM/26-27/1018,Nimbus Tech Solutions Pvt Ltd,ONLY_IN_BOOKS,160800,160800.0
+NIM/26-27/1043,Nimbus Tech Solutions Pvt Ltd,VALUE_MISMATCH,686100,617500.0
+NIM/26-27/1044,Nimbus Tech Solutions Pvt Ltd,MATCHED,37100,37100.0
+NIM/26-27/1051,Nimbus Tech Solutions Pvt Ltd,MATCHED,150200,150200.0
+ORB/26-27/1000,Orbit Engineering Services,MATCHED,274800,274800.0
+ORB/26-27/1001,Orbit Engineering Services,MATCHED,162700,162700.0
+PIO/26-27/1003,Pioneer Telecom Pvt Ltd,GSTIN_MISMATCH,377700,377700.0
+PIO/26-27/1007,Pioneer Telecom Pvt Ltd,VALUE_MISMATCH,445200,400700.0
+PIO/26-27/1008,Pioneer Telecom Pvt Ltd,GSTIN_MISMATCH,348300,348300.0
+PIO/26-27/1011,Pioneer Telecom Pvt Ltd,ONLY_IN_BOOKS,534600,534600.0
+PIO/26-27/1016,Pioneer Telecom Pvt Ltd,MATCHED,227000,227000.0
+PIO/26-27/1034,Pioneer Telecom Pvt Ltd,ONLY_IN_2B,138200,
+PIO/26-27/1040,Pioneer Telecom Pvt Ltd,MATCHED,55900,55900.0
+PIO/26-27/1041,Pioneer Telecom Pvt Ltd,ONLY_IN_2B,350600,
+STE/26-27/1009,Sterling Estates & Holdings Pvt Ltd,MATCHED,49500,49500.0
+STE/26-27/1012,Stellar Stationers & Supplies,VALUE_MISMATCH,617400,666800.0
+STE/26-27/1021,Sterling Estates & Holdings Pvt Ltd,MATCHED,372900,372900.0
+STE/26-27/1022,Stellar Stationers & Supplies,GSTIN_MISMATCH,584400,584400.0
+STE/26-27/1025,Stellar Stationers & Supplies,MATCHED,359300,359300.0
+STE/26-27/1031,Stellar Stationers & Supplies,MATCHED,53200,53200.0
+STE/26-27/1039,Stellar Stationers & Supplies,ONLY_IN_2B,523900,
+STE/26-27/1042,Sterling Estates & Holdings Pvt Ltd,VALUE_MISMATCH,381900,343700.0
+STE/26-27/1045,Stellar Stationers & Supplies,MATCHED,531200,531200.0
+STE/26-27/1048,Stellar Stationers & Supplies,MATCHED,201200,201200.0
+VER/26-27/1030,Vertex Facility Management Pvt Ltd,VALUE_MISMATCH,504900,545300.0
+VER/26-27/1035,Vertex Facility Management Pvt Ltd,ONLY_IN_BOOKS,353100,353100.0
+VER/26-27/1038,Vertex Facility Management Pvt Ltd,MATCHED,383000,383000.0
+ZEN/26-27/1006,Zenith Software Labs Pvt Ltd,MATCHED,211100,211100.0
+ZEN/26-27/1024,Zenith Software Labs Pvt Ltd,MATCHED,481200,481200.0
+ZEN/26-27/1028,Zenith Software Labs Pvt Ltd,MATCHED,684400,684400.0
+ZEN/26-27/1037,Zenith Software Labs Pvt Ltd,MATCHED,159200,159200.0
+ZEN/26-27/1046,Zenith Software Labs Pvt Ltd,MATCHED,634500,634500.0
+ZEN/26-27/1047,Zenith Software Labs Pvt Ltd,MATCHED,442800,442800.0
+ZEN/26-27/1049,Zenith Software Labs Pvt Ltd,GSTIN_MISMATCH,398300,398300.0

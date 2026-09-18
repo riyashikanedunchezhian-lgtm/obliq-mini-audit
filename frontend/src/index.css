@@ -1,0 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  min-height: 100vh;
+  @apply font-sans antialiased bg-stone-100 text-stone-900;
+}

@@ -1,0 +1,6 @@
+downloaded https://huggingface.co/datasets/AgamiAI/Indian-Bank-Statements/resolve/main/train/India_Bank_Statement_Digital_Type1/00001.json -> Bank_Statement.json (52412 bytes)
+downloaded https://huggingface.co/datasets/AgamiAI/Indian-Bank-Statements/resolve/main/train/India_Bank_Statement_Digital_Type1/00001.pdf -> Bank_Statement_complete.pdf (149533 bytes)
+downloaded https://raw.githubusercontent.com/AnujSureshkumar/synthetic-finance-data/main/output/purchase_register.csv -> Purchase_Register.csv (13002 bytes)
+downloaded https://raw.githubusercontent.com/AnujSureshkumar/synthetic-finance-data/main/output/gstr2b_recon_truth.csv -> GSTR2B_recon.csv (4010 bytes)
+downloaded https://raw.githubusercontent.com/ciru-ai/invoice-sandbox-benchmark/main/answer_key/invoices.csv -> Sales_Register.csv (18020 bytes)
+downloaded https://raw.githubusercontent.com/PearlThoughts/LedgerBridge/main/examples/pixelcraft-studios/statements/hdfc-ca-apr-2025.csv -> Expense_Summary.csv (4256 bytes)

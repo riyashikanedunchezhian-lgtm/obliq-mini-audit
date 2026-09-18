@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 520" role="img" aria-labelledby="title desc">
+  <title id="title">Mini Audit architecture</title>
+  <desc id="desc">Frontend to FastAPI to SQLite to append-only audit log. Every query is scoped by firm_id so ABC and XYZ stay isolated.</desc>
+  <rect width="920" height="520" fill="#f5f5f4"/>
+  <text x="40" y="42" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="20" font-weight="700" fill="#1c1917">Mini Audit Document Review</text>
+  <text x="40" y="66" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="13" fill="#57534e">One stack. Tenant isolation is a query constraint, not a UI filter.</text>
+
+  <!-- stack -->
+  <rect x="40" y="92" width="420" height="72" rx="8" fill="#fff" stroke="#d6d3d1"/>
+  <text x="250" y="124" text-anchor="middle" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="16" font-weight="600" fill="#1c1917">Frontend</text>
+  <text x="250" y="146" text-anchor="middle" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="12" fill="#57534e">React + Vite  ·  mock login (firm + role)</text>
+
+  <path d="M250 164 v22" stroke="#0f766e" stroke-width="2" fill="none"/>
+  <polygon points="250,192 244,182 256,182" fill="#0f766e"/>
+
+  <rect x="40" y="196" width="420" height="72" rx="8" fill="#fff" stroke="#d6d3d1"/>
+  <text x="250" y="228" text-anchor="middle" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="16" font-weight="600" fill="#1c1917">Backend / API</text>
+  <text x="250" y="250" text-anchor="middle" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="12" fill="#57534e">FastAPI  ·  status machine  ·  X-User-Id ’ firm_id</text>
+
+  <path d="M250 268 v22" stroke="#0f766e" stroke-width="2" fill="none"/>
+  <polygon points="250,296 244,286 256,286" fill="#0f766e"/>
+
+  <rect x="40" y="300" width="420" height="72" rx="8" fill="#fff" stroke="#d6d3d1"/>
+  <text x="250" y="332" text-anchor="middle" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="16" font-weight="600" fill="#1c1917">Database</text>
+  <text x="250" y="354" text-anchor="middle" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="12" fill="#57534e">SQLite  ·  firm_id on clients, documents, versions, events</text>
+
+  <path d="M250 372 v22" stroke="#0f766e" stroke-width="2" fill="none"/>
+  <polygon points="250,400 244,390 256,390" fill="#0f766e"/>
+
+  <rect x="40" y="404" width="420" height="72" rx="8" fill="#fff" stroke="#0f766e" stroke-width="1.5"/>
+  <text x="250" y="436" text-anchor="middle" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="16" font-weight="600" fill="#1c1917">Audit log</text>
+  <text x="250" y="458" text-anchor="middle" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="12" fill="#57534e">audit_events  ·  INSERT only  ·  UPDATE/DELETE triggers abort</text>
+
+  <!-- isolation callout -->
+  <rect x="500" y="196" width="380" height="280" rx="8" fill="#fff" stroke="#d6d3d1"/>
+  <text x="520" y="228" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="14" font-weight="600" fill="#1c1917">How Firm A stays isolated from Firm B</text>
+  <text x="520" y="256" font-family="Consolas, ui-monospace, monospace" font-size="12" fill="#0f766e">WHERE firm_id = :current_firm_id</text>
+  <text x="520" y="284" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="13" fill="#44403c">On every query that touches clients,</text>
+  <text x="520" y="304" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="13" fill="#44403c">documents, document_versions, audit_events.</text>
+  <text x="520" y="336" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="13" fill="#44403c">Missed tenant ’ 404 (not 403).</text>
+  <text x="520" y="356" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="13" fill="#44403c">Frontend is never trusted for this.</text>
+
+  <rect x="520" y="380" width="150" height="56" rx="6" fill="#f5f5f4" stroke="#d6d3d1"/>
+  <text x="595" y="404" text-anchor="middle" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="13" font-weight="600" fill="#1c1917">ABC &amp; Co.</text>
+  <text x="595" y="422" text-anchor="middle" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="11" fill="#57534e">Rohit · Aman</text>
+
+  <rect x="710" y="380" width="150" height="56" rx="6" fill="#f5f5f4" stroke="#d6d3d1"/>
+  <text x="785" y="404" text-anchor="middle" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="13" font-weight="600" fill="#1c1917">XYZ &amp; Co.</text>
+  <text x="785" y="422" text-anchor="middle" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="11" fill="#57534e">Priya · Vikram</text>
+</svg>
