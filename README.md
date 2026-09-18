@@ -95,7 +95,7 @@ No `.env` is required for the local demo.
 
 ## Architecture
 
-![Architecture: Frontend → Backend/API → Database → Audit log, with firm_id isolation](docs/architecture.svg)
+![Architecture: Frontend to Backend/API to Database to Audit log, with firm_id isolation](docs/architecture.png)
 
 ```
 Frontend (React / Vite)
