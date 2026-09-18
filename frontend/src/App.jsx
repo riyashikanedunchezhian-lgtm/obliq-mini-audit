@@ -55,6 +55,7 @@ export default function App() {
   const [busy, setBusy] = useState(false);
   const [pickFirm, setPickFirm] = useState("");
   const [pickUser, setPickUser] = useState("");
+  const [newFile, setNewFile] = useState(null);
 
   async function loadSession() {
     const list = await api.users();
@@ -307,9 +308,17 @@ export default function App() {
                 className="mt-4 flex flex-wrap items-end gap-2"
                 onSubmit={async (e) => {
                   e.preventDefault();
+                  if (!newFile) {
+                    setError("Choose a file to upload. Add document both creates the row and stores the file.");
+                    return;
+                  }
                   setBusy(true);
+                  setError("");
                   try {
-                    await api.createDocument(selectedClient.id, newType);
+                    const created = await api.createDocument(selectedClient.id, newType);
+                    await api.upload(created.id, newFile);
+                    setNewFile(null);
+                    e.target.reset();
                     setDocuments(await api.documents(selectedClient.id));
                   } catch (err) {
                     setError(err.message);
@@ -330,8 +339,17 @@ export default function App() {
                     ))}
                   </select>
                 </label>
+                <label className="text-sm">
+                  File
+                  <input
+                    type="file"
+                    className="mt-1 block text-sm"
+                    required
+                    onChange={(e) => setNewFile(e.target.files?.[0] || null)}
+                  />
+                </label>
                 <button className="rounded bg-stone-900 px-3 py-2 text-sm text-white" disabled={busy}>
-                  Add document
+                  {busy ? "Uploading…" : "Add document"}
                 </button>
               </form>
             )}
@@ -354,7 +372,9 @@ export default function App() {
                         onClick={() => openDoc(d).catch((e) => setError(e.message))}
                       >
                         <span>{d.doc_type}</span>
-                        <span>{d.current_filename || "—"}</span>
+                        <span className="truncate pr-2" title={d.current_filename || ""}>
+                          {d.current_filename || (d.current_status === "Pending" ? "No file yet" : "—")}
+                        </span>
                         <span>
                           <Badge>{d.current_status}</Badge>
                         </span>
