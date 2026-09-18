@@ -1,0 +1,6 @@
+services:
+  - type: web
+    name: obliq-mini-audit
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile

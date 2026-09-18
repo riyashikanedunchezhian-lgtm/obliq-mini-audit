@@ -51,6 +51,21 @@ npm.cmd run dev
 
 Open [http://localhost:5173](http://localhost:5173). Vite proxies `/api` to the backend.
 
+## Live demo (free)
+
+One process: FastAPI serves `/api` and the built React app. SQLite on the free tier is wiped when the instance sleeps, so boot runs `seed.py` again.
+
+1. Push the repo to GitHub (already done).
+2. Open [https://render.com](https://render.com) → Sign up with GitHub → **New +** → **Web Service**.
+3. Connect `obliq-mini-audit`.
+4. Runtime: **Docker**. Dockerfile path: `Dockerfile`. Instance: **Free**.
+5. Create Web Service. First build is 5–10 minutes. When it is Live, open `https://obliq-mini-audit.onrender.com` (your URL will differ).
+6. First click after idle can take ~30s (free instances sleep).
+
+Put that URL at the top of this README after it works. If the deploy is red, **do not** put a broken link in the submission — local run is safer.
+
+Optional: [Railway](https://railway.app) (Dockerfile, same repo) or [Fly.io](https://fly.io) if Render’s free queue is full. Do not split frontend/backend onto two free hosts unless you set `CORS_ORIGINS` to the UI origin.
+
 macOS / Linux:
 
 ```bash
