@@ -95,6 +95,7 @@ class Document(Base):
     current_status: Mapped[str] = mapped_column(String(64), nullable=False, default=DocumentStatus.PENDING.value)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow, nullable=False)
     latest_review_comment: Mapped[str | None] = mapped_column(Text, nullable=True)
+    deleted_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
 
     client: Mapped[Client] = relationship(back_populates="documents")
     versions: Mapped[list["DocumentVersion"]] = relationship(
@@ -190,6 +191,9 @@ def init_db(engine) -> None:
     with engine.begin() as conn:
         conn.execute(text(AUDIT_NO_UPDATE_TRIGGER))
         conn.execute(text(AUDIT_NO_DELETE_TRIGGER))
+        cols = {row[1] for row in conn.execute(text("PRAGMA table_info(documents)")).fetchall()}
+        if "deleted_at" not in cols:
+            conn.execute(text("ALTER TABLE documents ADD COLUMN deleted_at DATETIME"))
 
 
 def session_factory(engine):

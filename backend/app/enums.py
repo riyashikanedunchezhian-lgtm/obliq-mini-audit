@@ -31,3 +31,5 @@ class AuditAction(str, Enum):
     STARTED_REVIEW = "started_review"
     REQUESTED_CORRECTION = "requested_correction"
     APPROVED = "approved"
+    DELETED = "deleted"
+    VERSION_DELETED = "version_deleted"

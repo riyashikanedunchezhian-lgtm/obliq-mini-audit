@@ -65,6 +65,9 @@ export const api = {
     }),
   documentAudit: (id) => request(`/api/documents/${id}/audit`),
   firmAudit: () => request("/api/audit"),
+  deleteDocument: (id) => request(`/api/documents/${id}`, { method: "DELETE" }),
+  deleteVersion: (id, versionId) =>
+    request(`/api/documents/${id}/versions/${versionId}`, { method: "DELETE" }),
   download: async (id, versionId, filename) => {
     const userId = getUserId();
     const url = versionId

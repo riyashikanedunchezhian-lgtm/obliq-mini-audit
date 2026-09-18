@@ -401,6 +401,13 @@ export default function App() {
             setBusy={setBusy}
             setError={setError}
             refreshDoc={refreshDoc}
+            onDeleted={async () => {
+              setSelectedDoc(null);
+              setView("client");
+              if (selectedClient) {
+                setDocuments(await api.documents(selectedClient.id));
+              }
+            }}
             onBack={() => {
               setView("client");
               setSelectedDoc(null);
@@ -441,6 +448,7 @@ function ReviewScreen({
   setBusy,
   setError,
   refreshDoc,
+  onDeleted,
   onBack,
 }) {
   const latest = doc.versions?.[doc.versions.length - 1];
@@ -515,6 +523,27 @@ function ReviewScreen({
               Download current file
             </button>
           )}
+          {me.role === "staff" && (
+            <button
+              disabled={busy}
+              className="rounded border border-red-300 bg-white px-3 py-2 text-sm text-red-700"
+              onClick={async () => {
+                if (!window.confirm("Delete this document? Audit history is kept.")) return;
+                setBusy(true);
+                setError("");
+                try {
+                  await api.deleteDocument(doc.id);
+                  await onDeleted();
+                } catch (err) {
+                  setError(err.message);
+                } finally {
+                  setBusy(false);
+                }
+              }}
+            >
+              Delete document
+            </button>
+          )}
         </div>
 
         {me.role === "staff" &&
@@ -578,21 +607,35 @@ function ReviewScreen({
         )}
 
         <div className="mt-8">
-          <h2 className="font-medium">Versions (append-only)</h2>
+          <h2 className="font-medium">Versions</h2>
           <ul className="mt-2 space-y-2 text-sm">
             {doc.versions?.map((v, i) => (
-              <li key={v.id} className="rounded border border-stone-200 bg-white px-3 py-2">
-                <button
-                  className="text-left hover:underline"
-                  onClick={() =>
-                    api.download(doc.id, v.id, v.original_filename).catch((e) => setError(e.message))
-                  }
-                >
-                  v{i + 1} {v.original_filename}
-                </button>
-                <p className="text-xs text-stone-500">
-                  {v.uploaded_by_name} · {formatWhen(v.uploaded_at)} · {v.checksum_sha256.slice(0, 12)}…
-                </p>
+              <li key={v.id} className="flex items-start justify-between gap-3 rounded border border-stone-200 bg-white px-3 py-2">
+                <div>
+                  <button
+                    className="text-left hover:underline"
+                    onClick={() =>
+                      api.download(doc.id, v.id, v.original_filename).catch((e) => setError(e.message))
+                    }
+                  >
+                    v{i + 1} {v.original_filename}
+                  </button>
+                  <p className="text-xs text-stone-500">
+                    {v.uploaded_by_name} · {formatWhen(v.uploaded_at)} · {v.checksum_sha256.slice(0, 12)}…
+                  </p>
+                </div>
+                {me.role === "staff" && (
+                  <button
+                    disabled={busy}
+                    className="shrink-0 text-xs text-red-700 hover:underline"
+                    onClick={() => {
+                      if (!window.confirm(`Delete file ${v.original_filename}?`)) return;
+                      run(() => api.deleteVersion(doc.id, v.id));
+                    }}
+                  >
+                    Delete file
+                  </button>
+                )}
               </li>
             ))}
             {!doc.versions?.length && <li className="text-stone-500">No files yet.</li>}

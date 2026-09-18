@@ -33,7 +33,11 @@ def get_document_for_firm(db: Session, firm_id: int, document_id: int) -> Docume
     return (
         db.query(Document)
         .options(joinedload(Document.client), joinedload(Document.versions))
-        .filter(Document.firm_id == firm_id, Document.id == document_id)
+        .filter(
+            Document.firm_id == firm_id,
+            Document.id == document_id,
+            Document.deleted_at.is_(None),
+        )
         .one_or_none()
     )
 
@@ -46,7 +50,7 @@ def list_documents_for_firm(
     q = (
         db.query(Document)
         .options(joinedload(Document.client), joinedload(Document.versions))
-        .filter(Document.firm_id == firm_id)
+        .filter(Document.firm_id == firm_id, Document.deleted_at.is_(None))
     )
     if client_id is not None:
         q = q.filter(Document.client_id == client_id)

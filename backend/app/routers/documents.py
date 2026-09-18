@@ -3,7 +3,7 @@ from __future__ import annotations
 from pathlib import Path
 
 from fastapi import APIRouter, Depends, File, Form, HTTPException, UploadFile
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, Response
 from sqlalchemy.orm import Session
 
 from app.audit import record_event, to_audit_out
@@ -11,7 +11,7 @@ from app.db import get_db
 from app.deps import get_current_user, require_reviewer, require_staff
 from app.enums import AuditAction, DocumentStatus, DocumentType, Role
 from app.files import store_new_version
-from app.models import Document, User
+from app.models import Document, DocumentVersion, User, utcnow
 from app.queries import (
     get_client_for_firm,
     get_document_for_firm,
@@ -189,6 +189,73 @@ def download_document(
     if not path.exists():
         raise HTTPException(status_code=404, detail="File missing on disk")
     return FileResponse(path, filename=version.original_filename)
+
+
+@router.delete("/{document_id}", status_code=204)
+def delete_document(
+    document_id: int,
+    user: User = Depends(require_staff),
+    db: Session = Depends(get_db),
+) -> Response:
+    document = get_document_for_firm(db, user.firm_id, document_id)
+    if document is None:
+        raise _not_found()
+    from_status = document.current_status
+    label = document_label(document)
+    db.add(
+        record_event(
+            document=document,
+            actor=user,
+            action=AuditAction.DELETED,
+            from_status=from_status,
+            to_status=from_status,
+            note=label,
+        )
+    )
+    document.deleted_at = utcnow()
+    db.commit()
+    return Response(status_code=204)
+
+
+@router.delete("/{document_id}/versions/{version_id}", response_model=DocumentOut)
+def delete_document_version(
+    document_id: int,
+    version_id: int,
+    user: User = Depends(require_staff),
+    db: Session = Depends(get_db),
+) -> DocumentOut:
+    document = get_document_for_firm(db, user.firm_id, document_id)
+    if document is None:
+        raise _not_found()
+    version = get_version_for_firm(db, user.firm_id, version_id)
+    if version is None or version.document_id != document.id:
+        raise HTTPException(status_code=404, detail="Version not found")
+    name = version.original_filename
+    path = Path(version.file_path)
+    db.add(
+        record_event(
+            document=document,
+            actor=user,
+            action=AuditAction.VERSION_DELETED,
+            from_status=document.current_status,
+            to_status=document.current_status,
+            note=name,
+        )
+    )
+    db.delete(version)
+    db.flush()
+    remaining = (
+        db.query(DocumentVersion)
+        .filter(DocumentVersion.document_id == document.id, DocumentVersion.firm_id == user.firm_id)
+        .count()
+    )
+    if remaining == 0:
+        document.current_status = DocumentStatus.PENDING.value
+    db.commit()
+    if path.exists():
+        path.unlink()
+    document = get_document_for_firm(db, user.firm_id, document_id)
+    return serialize_document(db, document)
 
 
 @router.post("/{document_id}/start-review", response_model=DocumentOut)

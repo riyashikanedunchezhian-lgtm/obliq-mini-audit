@@ -45,6 +45,10 @@ def format_event(event: AuditEvent, document_label: str) -> str:
         return f"{time} — {actor} approved {document_label}"
     if event.action == AuditAction.CREATED.value:
         return f"{time} — {actor} created {document_label} ({event.to_status})"
+    if event.action == AuditAction.DELETED.value:
+        return f"{time} — {actor} deleted {document_label}"
+    if event.action == AuditAction.VERSION_DELETED.value:
+        return f"{time} — {actor} deleted file {event.note or document_label}"
     return f"{time} — {actor} ({event.actor_role}) {event.action} {document_label}"
 
 

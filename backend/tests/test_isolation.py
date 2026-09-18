@@ -90,3 +90,11 @@ def test_firm_a_audit_feed_excludes_firm_b_events(client: TestClient, seeded, db
     doc_ids = {e["document_id"] for e in res.json()}
     assert seeded["doc_a"].id in doc_ids
     assert seeded["doc_b"].id not in doc_ids
+
+
+def test_firm_a_cannot_delete_firm_b_document(client: TestClient, seeded):
+    res = client.delete(
+        f"/api/documents/{seeded['doc_b'].id}",
+        headers={"X-User-Id": str(seeded["rohit"].id)},
+    )
+    assert res.status_code == 404
