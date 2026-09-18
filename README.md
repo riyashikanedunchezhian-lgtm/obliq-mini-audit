@@ -2,6 +2,9 @@
 
 Take-home for **OBLIQ.in** (Founding Engineer). A CA-firm employee can create/view a client, add audit documents, review them, approve or request correction, and view audit history. That is the full product.
 
+**Live demo:** [https://obliq-mini-audit.onrender.com/](https://obliq-mini-audit.onrender.com/)  
+(Free Render instance — first load after idle can take ~30 seconds.)
+
 **Stack (one process, one database, one UI):** FastAPI + SQLite + React (Vite). Chosen because isolation, the status machine, and the append-only audit log live in the backend; the UI is a thin client. No JWT, no extra services, no analytics dashboard.
 
 Authentication is **not** authorization. The login screen is a firm + role picker (`X-User-Id` header). Every client, document, version, and audit query still runs `WHERE firm_id = :current_firm_id` on the server. Hiding a button in React is not security.
@@ -53,18 +56,9 @@ Open [http://localhost:5173](http://localhost:5173). Vite proxies `/api` to the 
 
 ## Live demo (free)
 
-One process: FastAPI serves `/api` and the built React app. SQLite on the free tier is wiped when the instance sleeps, so boot runs `seed.py` again.
+**URL:** [https://obliq-mini-audit.onrender.com/](https://obliq-mini-audit.onrender.com/)
 
-1. Push the repo to GitHub (already done).
-2. Open [https://render.com](https://render.com) → Sign up with GitHub → **New +** → **Web Service**.
-3. Connect `obliq-mini-audit`.
-4. Runtime: **Docker**. Dockerfile path: `Dockerfile`. Instance: **Free**.
-5. Create Web Service. First build is 5–10 minutes. When it is Live, open `https://obliq-mini-audit.onrender.com` (your URL will differ).
-6. First click after idle can take ~30s (free instances sleep).
-
-Put that URL at the top of this README after it works. If the deploy is red, **do not** put a broken link in the submission — local run is safer.
-
-Optional: [Railway](https://railway.app) (Dockerfile, same repo) or [Fly.io](https://fly.io) if Render’s free queue is full. Do not split frontend/backend onto two free hosts unless you set `CORS_ORIGINS` to the UI origin.
+One process: FastAPI serves `/api` and the built React app. SQLite on the free tier is wiped when the instance sleeps, so boot runs `seed.py` again. First click after idle can take ~30s.
 
 macOS / Linux:
 
