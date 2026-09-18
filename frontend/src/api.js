@@ -44,6 +44,13 @@ export const api = {
   document: (id) => request(`/api/documents/${id}`),
   createDocument: (client_id, doc_type) =>
     request("/api/documents", { method: "POST", body: JSON.stringify({ client_id, doc_type }) }),
+  createDocumentWithFile: (client_id, doc_type, file) => {
+    const body = new FormData();
+    body.append("client_id", String(client_id));
+    body.append("doc_type", doc_type);
+    body.append("file", file);
+    return request("/api/documents/with-file", { method: "POST", body });
+  },
   upload: (id, file) => {
     const body = new FormData();
     body.append("file", file);

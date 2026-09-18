@@ -308,18 +308,24 @@ export default function App() {
                 className="mt-4 flex flex-wrap items-end gap-2"
                 onSubmit={async (e) => {
                   e.preventDefault();
+                  const form = e.currentTarget;
                   if (!newFile) {
-                    setError("Choose a file to upload. Add document both creates the row and stores the file.");
+                    setError("Choose a file. The list shows its name and Uploaded status right after save.");
                     return;
                   }
                   setBusy(true);
                   setError("");
                   try {
-                    const created = await api.createDocument(selectedClient.id, newType);
-                    await api.upload(created.id, newFile);
+                    const saved = await api.createDocumentWithFile(
+                      selectedClient.id,
+                      newType,
+                      newFile
+                    );
                     setNewFile(null);
-                    e.target.reset();
-                    setDocuments(await api.documents(selectedClient.id));
+                    form.reset();
+                    const rows = await api.documents(selectedClient.id);
+                    const others = rows.filter((d) => d.id !== saved.id);
+                    setDocuments([saved, ...others]);
                   } catch (err) {
                     setError(err.message);
                   } finally {
@@ -364,23 +370,19 @@ export default function App() {
               </thead>
               <tbody>
                 {documents.map((d) => (
-                  <tr key={d.id} className="border-t border-stone-100 hover:bg-stone-50">
-                    <td colSpan={4} className="p-0">
-                      <button
-                        type="button"
-                        className="grid w-full grid-cols-4 items-center px-3 py-2 text-left"
-                        onClick={() => openDoc(d).catch((e) => setError(e.message))}
-                      >
-                        <span>{d.doc_type}</span>
-                        <span className="truncate pr-2" title={d.current_filename || ""}>
-                          {d.current_filename || (d.current_status === "Pending" ? "No file yet" : "—")}
-                        </span>
-                        <span>
-                          <Badge>{d.current_status}</Badge>
-                        </span>
-                        <span>{formatWhen(d.uploaded_at)}</span>
-                      </button>
+                  <tr
+                    key={d.id}
+                    className="cursor-pointer border-t border-stone-100 hover:bg-stone-50"
+                    onClick={() => openDoc(d).catch((e) => setError(e.message))}
+                  >
+                    <td className="px-3 py-2">{d.doc_type}</td>
+                    <td className="px-3 py-2 font-medium">
+                      {d.current_filename || d.versions?.[d.versions.length - 1]?.original_filename || "No file yet"}
                     </td>
+                    <td className="px-3 py-2">
+                      <Badge>{d.current_status}</Badge>
+                    </td>
+                    <td className="px-3 py-2">{formatWhen(d.uploaded_at)}</td>
                   </tr>
                 ))}
               </tbody>

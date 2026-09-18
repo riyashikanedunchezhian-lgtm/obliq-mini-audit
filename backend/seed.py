@@ -14,6 +14,7 @@ from __future__ import annotations
 
 import hashlib
 import os
+import shutil
 import urllib.request
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
@@ -38,36 +39,40 @@ ROOT = Path(__file__).resolve().parent
 SEED_DIR = ROOT / "data" / "seed_files"
 IST = timezone(timedelta(hours=5, minutes=30))
 
-# One small file from each dataset named in the brief — not READMEs, not bulk dumps.
+# Original filenames from each dataset (one small file per type).
 REMOTE_CANDIDATES: dict[str, list[str]] = {
-    # Bank Statement — AgamiAI JSON extract (incomplete vs full PDF)
     "bank_statement": [
         "https://huggingface.co/datasets/AgamiAI/Indian-Bank-Statements/resolve/main/train/India_Bank_Statement_Digital_Type1/00001.json",
     ],
     "bank_statement_revised": [
         "https://huggingface.co/datasets/AgamiAI/Indian-Bank-Statements/resolve/main/train/India_Bank_Statement_Digital_Type1/00001.pdf",
     ],
-    # Purchase Register — synthetic-finance-data
     "purchase_register": [
         "https://raw.githubusercontent.com/AnujSureshkumar/synthetic-finance-data/main/output/purchase_register.csv",
     ],
-    # GST Return — GSTR-2B recon truth (VALUE_MISMATCH / GSTIN_MISMATCH rows)
     "gst_return": [
-        "https://raw.githubusercontent.com/AnujSureshkumar/synthetic-finance-data/main/output/gstr2b_recon_truth.csv",
+        "https://raw.githubusercontent.com/AnujSureshkumar/synthetic-finance-data/main/output/gstr2b_062026.json",
     ],
-    # Sales Register — invoice-sandbox-benchmark gold invoices
     "sales_register": [
         "https://raw.githubusercontent.com/ciru-ai/invoice-sandbox-benchmark/main/answer_key/invoices.csv",
     ],
-    # Expense Summary — LedgerBridge bookkeeping CSV export
     "expense_summary": [
         "https://raw.githubusercontent.com/PearlThoughts/LedgerBridge/main/examples/pixelcraft-studios/statements/hdfc-ca-apr-2025.csv",
     ],
 }
 
+ORIGINAL_NAMES: dict[str, str] = {
+    "bank_statement": "00001.json",
+    "bank_statement_revised": "00001.pdf",
+    "purchase_register": "purchase_register.csv",
+    "gst_return": "gstr2b_062026.json",
+    "sales_register": "invoices.csv",
+    "expense_summary": "hdfc-ca-apr-2025.csv",
+}
+
 FALLBACK_CONTENT: dict[str, tuple[str, bytes]] = {
     "bank_statement": (
-        "Bank_Statement.json",
+        "00001.json",
         (
             b"%PDF-1.4\n% synthetic fallback from AgamiAI/Indian-Bank-Statements schema\n"
             b"HDFC Bank - ABC Traders Pvt. Ltd. A/c 5020001122334\n"
@@ -78,7 +83,7 @@ FALLBACK_CONTENT: dict[str, tuple[str, bytes]] = {
         ),
     ),
     "bank_statement_revised": (
-        "Bank_Statement_complete.pdf",
+        "00001.pdf",
         (
             b"%PDF-1.4\n% revised bank statement - pages 1-3 present\n"
             b"HDFC Bank - ABC Traders Pvt. Ltd.\n"
@@ -86,7 +91,7 @@ FALLBACK_CONTENT: dict[str, tuple[str, bytes]] = {
         ),
     ),
     "purchase_register": (
-        "Purchase_Register.csv",
+        "purchase_register.csv",
         (
             b"source,AnujSureshkumar/synthetic-finance-data (synthetic fallback)\n"
             b"invoice_no,vendor,gstin,taxable,igst_rate,igst_amount,total\n"
@@ -96,7 +101,7 @@ FALLBACK_CONTENT: dict[str, tuple[str, bytes]] = {
         ),
     ),
     "gst_return": (
-        "GSTR2B_recon.csv",
+        "gstr2b_062026.json",
         (
             b"source,AnujSureshkumar/synthetic-finance-data GSTR-2B extract (synthetic fallback)\n"
             b"gstin,invoice,taxable,igst,period\n"
@@ -104,7 +109,7 @@ FALLBACK_CONTENT: dict[str, tuple[str, bytes]] = {
         ),
     ),
     "sales_register": (
-        "Sales_Register.csv",
+        "invoices.csv",
         (
             b"source,ciru-ai/invoice-sandbox-benchmark (synthetic fallback)\n"
             b"invoice_no,buyer,hsn,qty,rate,amount\n"
@@ -113,7 +118,7 @@ FALLBACK_CONTENT: dict[str, tuple[str, bytes]] = {
         ),
     ),
     "expense_summary": (
-        "Expense_Summary.csv",
+        "hdfc-ca-apr-2025.csv",
         (
             b"source,PearlThoughts/LedgerBridge bookkeeping export (synthetic fallback)\n"
             b"date,account,memo,debit,credit\n"
@@ -145,16 +150,19 @@ def _try_download(urls: list[str], dest: Path) -> bool:
 
 
 def materialize_seed_files() -> dict[str, Path]:
-    """Prefer the real dataset files; fall back to labeled synthetics if unreachable."""
+    """Download original dataset files; fall back only if a remote is unreachable."""
     SEED_DIR.mkdir(parents=True, exist_ok=True)
     paths: dict[str, Path] = {}
-    for key, (filename, fallback) in FALLBACK_CONTENT.items():
+    for key, (fallback_name, fallback) in FALLBACK_CONTENT.items():
+        filename = ORIGINAL_NAMES.get(key, fallback_name)
         dest = SEED_DIR / filename
         urls = REMOTE_CANDIDATES.get(key, [])
         used_remote = _try_download(urls, dest) if urls else False
         if not used_remote:
-            dest.write_bytes(fallback)
-            DOWNLOAD_NOTES.append(f"fallback written for {key} -> {filename}")
+            raise SystemExit(
+                f"Could not download original dataset file for {key} from {urls}. "
+                "Seed requires the real files, not placeholders."
+            )
         paths[key] = dest
     return paths
 
@@ -251,7 +259,7 @@ def seed(db: Session, files: dict[str, Path]) -> None:
     db.add(bank)
     db.flush()
     add_event(db, bank, rohit, AuditAction.CREATED, at(10, 15), None, "Pending")
-    add_version(db, bank, rohit, files["bank_statement"], at(10, 20), "Bank_Statement.json")
+    add_version(db, bank, rohit, files["bank_statement"], at(10, 20))
     add_event(db, bank, rohit, AuditAction.UPLOADED, at(10, 20), "Pending", "Uploaded")
     add_event(db, bank, aman, AuditAction.STARTED_REVIEW, at(10, 31), "Uploaded", "Under Review")
     add_event(
@@ -264,9 +272,7 @@ def seed(db: Session, files: dict[str, Path]) -> None:
         "Correction Required",
         note="Page 3 of the AgamiAI 00001.pdf (closing-balance block) is missing. Only the JSON extract was uploaded.",
     )
-    add_version(
-        db, bank, rohit, files["bank_statement_revised"], at(11, 5), "Bank_Statement_complete.pdf"
-    )
+    add_version(db, bank, rohit, files["bank_statement_revised"], at(11, 5))
     add_event(
         db,
         bank,
@@ -297,7 +303,7 @@ def seed(db: Session, files: dict[str, Path]) -> None:
     db.add(purchase)
     db.flush()
     add_event(db, purchase, rohit, AuditAction.CREATED, at(9, 0), None, "Pending")
-    add_version(db, purchase, rohit, files["purchase_register"], at(9, 12), "Purchase_Register.csv")
+    add_version(db, purchase, rohit, files["purchase_register"], at(9, 12))
     add_event(db, purchase, rohit, AuditAction.UPLOADED, at(9, 12), "Pending", "Uploaded")
     add_event(db, purchase, aman, AuditAction.STARTED_REVIEW, at(9, 40), "Uploaded", "Under Review")
     add_event(
@@ -322,7 +328,7 @@ def seed(db: Session, files: dict[str, Path]) -> None:
     db.add(gst)
     db.flush()
     add_event(db, gst, rohit, AuditAction.CREATED, at(12, 0), None, "Pending")
-    add_version(db, gst, rohit, files["gst_return"], at(12, 8), "GSTR2B_recon.csv")
+    add_version(db, gst, rohit, files["gst_return"], at(12, 8))
     add_event(db, gst, rohit, AuditAction.UPLOADED, at(12, 8), "Pending", "Uploaded")
     add_event(db, gst, aman, AuditAction.STARTED_REVIEW, at(12, 20), "Uploaded", "Under Review")
 
@@ -337,20 +343,22 @@ def seed(db: Session, files: dict[str, Path]) -> None:
     db.add(sales)
     db.flush()
     add_event(db, sales, rohit, AuditAction.CREATED, at(13, 0), None, "Pending")
-    add_version(db, sales, rohit, files["sales_register"], at(13, 5), "Sales_Register.csv")
+    add_version(db, sales, rohit, files["sales_register"], at(13, 5))
     add_event(db, sales, rohit, AuditAction.UPLOADED, at(13, 5), "Pending", "Uploaded")
 
-    # Expense Summary — LedgerBridge
+    # Expense Summary — LedgerBridge hdfc-ca-apr-2025.csv (original)
     expense = Document(
         client_id=traders.id,
         firm_id=abc.id,
         doc_type=DocumentType.EXPENSE_SUMMARY.value,
-        current_status=DocumentStatus.PENDING.value,
+        current_status=DocumentStatus.UPLOADED.value,
         created_at=at(14, 0),
     )
     db.add(expense)
     db.flush()
     add_event(db, expense, rohit, AuditAction.CREATED, at(14, 0), None, "Pending")
+    add_version(db, expense, rohit, files["expense_summary"], at(14, 8))
+    add_event(db, expense, rohit, AuditAction.UPLOADED, at(14, 8), "Pending", "Uploaded")
 
     # Extra Approved GST-adjacent sales for mill client so Firm A has 7 docs
     mill_sales = Document(
@@ -363,7 +371,7 @@ def seed(db: Session, files: dict[str, Path]) -> None:
     db.add(mill_sales)
     db.flush()
     add_event(db, mill_sales, rohit, AuditAction.CREATED, at(8, 0), None, "Pending")
-    add_version(db, mill_sales, rohit, files["sales_register"], at(8, 10), "Mill_Sales_Register.csv")
+    add_version(db, mill_sales, rohit, files["sales_register"], at(8, 10))
     add_event(db, mill_sales, rohit, AuditAction.UPLOADED, at(8, 10), "Pending", "Uploaded")
     add_event(db, mill_sales, aman, AuditAction.STARTED_REVIEW, at(8, 25), "Uploaded", "Under Review")
     add_event(db, mill_sales, aman, AuditAction.APPROVED, at(8, 40), "Under Review", "Approved")
@@ -378,7 +386,7 @@ def seed(db: Session, files: dict[str, Path]) -> None:
     db.add(mill_exp)
     db.flush()
     add_event(db, mill_exp, rohit, AuditAction.CREATED, at(15, 0), None, "Pending")
-    add_version(db, mill_exp, rohit, files["expense_summary"], at(15, 12), "Mill_Expense_Summary.csv")
+    add_version(db, mill_exp, rohit, files["expense_summary"], at(15, 12))
     add_event(db, mill_exp, rohit, AuditAction.UPLOADED, at(15, 12), "Pending", "Uploaded")
 
     # --- Firm B / XYZ Exports: 6 documents, isolated from Firm A ---
@@ -393,7 +401,7 @@ def seed(db: Session, files: dict[str, Path]) -> None:
     db.add(b_bank)
     db.flush()
     add_event(db, b_bank, priya, AuditAction.CREATED, at(10, 0, 17), None, "Pending")
-    add_version(db, b_bank, priya, files["bank_statement"], at(10, 6, 17), "XYZ_Bank_Statement.pdf")
+    add_version(db, b_bank, priya, files["bank_statement"], at(10, 6, 17))
     add_event(db, b_bank, priya, AuditAction.UPLOADED, at(10, 6, 17), "Pending", "Uploaded")
 
     b_purchase = Document(
@@ -403,15 +411,16 @@ def seed(db: Session, files: dict[str, Path]) -> None:
         current_status=DocumentStatus.CORRECTION_REQUIRED.value,
         created_at=at(11, 0, 17),
         latest_review_comment=(
-            "CAT/26-27/1017 Catalyst Media is VALUE_MISMATCH: GSTR-2B taxable Rs 7,04,000 vs "
-            "books Rs 7,60,300 (synthetic-finance-data gstr2b_recon_truth.csv). Re-upload GST "
-            "working that explains the Rs 56,300 gap."
+            "INV-202606-045 (Pioneer Consulting LLP, GSTIN 33JDVCC3793Y1ZS) is Inter-state "
+            "(place of supply Tamil Nadu) with reverse_charge=Yes, but IGST is recorded as 0 "
+            "and invoice_total equals taxable_value Rs 67,100. Record IGST of Rs 12,078 (18%) "
+            "or attach RCM working. Source: synthetic-finance-data output/purchase_register.csv."
         ),
     )
     db.add(b_purchase)
     db.flush()
     add_event(db, b_purchase, priya, AuditAction.CREATED, at(11, 0, 17), None, "Pending")
-    add_version(db, b_purchase, priya, files["purchase_register"], at(11, 10, 17), "XYZ_Purchase_Register.csv")
+    add_version(db, b_purchase, priya, files["purchase_register"], at(11, 10, 17))
     add_event(db, b_purchase, priya, AuditAction.UPLOADED, at(11, 10, 17), "Pending", "Uploaded")
     add_event(db, b_purchase, vikram, AuditAction.STARTED_REVIEW, at(11, 30, 17), "Uploaded", "Under Review")
     add_event(
@@ -435,7 +444,7 @@ def seed(db: Session, files: dict[str, Path]) -> None:
     db.add(b_gst)
     db.flush()
     add_event(db, b_gst, priya, AuditAction.CREATED, at(12, 0, 17), None, "Pending")
-    add_version(db, b_gst, priya, files["gst_return"], at(12, 15, 17), "XYZ_GSTR2B_recon.csv")
+    add_version(db, b_gst, priya, files["gst_return"], at(12, 15, 17))
     add_event(db, b_gst, priya, AuditAction.UPLOADED, at(12, 15, 17), "Pending", "Uploaded")
     add_event(db, b_gst, vikram, AuditAction.STARTED_REVIEW, at(12, 40, 17), "Uploaded", "Under Review")
     add_event(db, b_gst, vikram, AuditAction.APPROVED, at(12, 55, 17), "Under Review", "Approved")
@@ -450,7 +459,7 @@ def seed(db: Session, files: dict[str, Path]) -> None:
     db.add(b_sales)
     db.flush()
     add_event(db, b_sales, priya, AuditAction.CREATED, at(13, 0, 17), None, "Pending")
-    add_version(db, b_sales, priya, files["sales_register"], at(13, 8, 17), "XYZ_Sales_Register.csv")
+    add_version(db, b_sales, priya, files["sales_register"], at(13, 8, 17))
     add_event(db, b_sales, priya, AuditAction.UPLOADED, at(13, 8, 17), "Pending", "Uploaded")
     add_event(db, b_sales, vikram, AuditAction.STARTED_REVIEW, at(13, 22, 17), "Uploaded", "Under Review")
 
@@ -458,12 +467,14 @@ def seed(db: Session, files: dict[str, Path]) -> None:
         client_id=exports.id,
         firm_id=xyz.id,
         doc_type=DocumentType.EXPENSE_SUMMARY.value,
-        current_status=DocumentStatus.PENDING.value,
+        current_status=DocumentStatus.UPLOADED.value,
         created_at=at(14, 0, 17),
     )
     db.add(b_exp)
     db.flush()
     add_event(db, b_exp, priya, AuditAction.CREATED, at(14, 0, 17), None, "Pending")
+    add_version(db, b_exp, priya, files["expense_summary"], at(14, 10, 17))
+    add_event(db, b_exp, priya, AuditAction.UPLOADED, at(14, 10, 17), "Pending", "Uploaded")
 
     b_log = Document(
         client_id=logistics.id,
@@ -475,7 +486,7 @@ def seed(db: Session, files: dict[str, Path]) -> None:
     db.add(b_log)
     db.flush()
     add_event(db, b_log, priya, AuditAction.CREATED, at(9, 0, 17), None, "Pending")
-    add_version(db, b_log, priya, files["bank_statement_revised"], at(9, 20, 17), "XYZ_Logistics_Bank.pdf")
+    add_version(db, b_log, priya, files["bank_statement_revised"], at(9, 20, 17))
     add_event(db, b_log, priya, AuditAction.UPLOADED, at(9, 20, 17), "Pending", "Uploaded")
     add_event(db, b_log, vikram, AuditAction.STARTED_REVIEW, at(9, 45, 17), "Uploaded", "Under Review")
     add_event(db, b_log, vikram, AuditAction.APPROVED, at(10, 5, 17), "Under Review", "Approved")
@@ -490,7 +501,7 @@ def seed(db: Session, files: dict[str, Path]) -> None:
     db.add(b_log_exp)
     db.flush()
     add_event(db, b_log_exp, priya, AuditAction.CREATED, at(16, 0, 17), None, "Pending")
-    add_version(db, b_log_exp, priya, files["expense_summary"], at(16, 10, 17), "XYZ_Logistics_Expenses.csv")
+    add_version(db, b_log_exp, priya, files["expense_summary"], at(16, 10, 17))
     add_event(db, b_log_exp, priya, AuditAction.UPLOADED, at(16, 10, 17), "Pending", "Uploaded")
 
     db.commit()
@@ -507,6 +518,10 @@ def main() -> None:
                 "Stop the backend (Ctrl+C in that terminal), then run: python seed.py"
             ) from exc
     files = materialize_seed_files()
+    upload_root = configured_upload_root()
+    if upload_root.exists():
+        shutil.rmtree(upload_root)
+    upload_root.mkdir(parents=True, exist_ok=True)
     engine = make_engine()
     init_db(engine)
     SessionLocal = session_factory(engine)

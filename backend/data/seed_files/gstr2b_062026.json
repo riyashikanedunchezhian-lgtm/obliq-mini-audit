@@ -1,0 +1,1048 @@
+{
+  "chksum": "SYNTHETIC-DEMO-DATA",
+  "data": {
+    "gstin": "29TSZCE1793F7Z7",
+    "rtnprd": "062026",
+    "version": "GSTR2B-1.0",
+    "gendt": "12-07-2026",
+    "itcsumm": {
+      "itcavl": {
+        "igst": 1689108,
+        "cgst": 952632,
+        "sgst": 952632,
+        "cess": 0
+      }
+    },
+    "docdata": {
+      "b2b": [
+        {
+          "ctin": "09WMYCT4763F3Z8",
+          "trdnm": "Orbit Engineering Services",
+          "supprd": "062026",
+          "inv": [
+            {
+              "inum": "ORB/26-27/1000",
+              "dt": "19-06-2026",
+              "val": 324264,
+              "pos": "09",
+              "rev": "N",
+              "itcavl": "Y",
+              "rsn": "",
+              "items": [
+                {
+                  "rt": 18,
+                  "txval": 274800,
+                  "igst": 49464,
+                  "cgst": 0,
+                  "sgst": 0,
+                  "cess": 0
+                }
+              ]
+            },
+            {
+              "inum": "ORB/26-27/1001",
+              "dt": "13-06-2026",
+              "val": 191986,
+              "pos": "09",
+              "rev": "N",
+              "itcavl": "Y",
+              "rsn": "",
+              "items": [
+                {
+                  "rt": 18,
+                  "txval": 162700,
+                  "igst": 29286,
+                  "cgst": 0,
+                  "sgst": 0,
+                  "cess": 0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ctin": "29CDJCV8558J4Z3",
+          "trdnm": "Apex Cloud Services Pvt Ltd",
+          "supprd": "062026",
+          "inv": [
+            {
+              "inum": "APE/26-27/1002",
+              "dt": "17-06-2026",
+              "val": 850544,
+              "pos": "29",
+              "rev": "N",
+              "itcavl": "Y",
+              "rsn": "",
+              "items": [
+                {
+                  "rt": 18,
+                  "txval": 720800,
+                  "igst": 0,
+                  "cgst": 64872,
+                  "sgst": 64872,
+                  "cess": 0
+                }
+              ]
+            },
+            {
+              "inum": "APE/26-27/1010",
+              "dt": "15-06-2026",
+              "val": 516486,
+              "pos": "29",
+              "rev": "N",
+              "itcavl": "Y",
+              "rsn": "",
+              "items": [
+                {
+                  "rt": 18,
+                  "txval": 437700,
+                  "igst": 0,
+                  "cgst": 39393,
+                  "sgst": 39393,
+                  "cess": 0
+                }
+              ]
+            },
+            {
+              "inum": "APE/26-27/1053",
+              "dt": "17-06-2026",
+              "val": 516486,
+              "pos": "29",
+              "rev": "N",
+              "itcavl": "Y",
+              "rsn": "",
+              "items": [
+                {
+                  "rt": 18,
+                  "txval": 437700,
+                  "igst": 0,
+                  "cgst": 39393,
+                  "sgst": 39393,
+                  "cess": 0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ctin": "36JDVCC3793Y1ZM",
+          "trdnm": "Pioneer Telecom Pvt Ltd",
+          "supprd": "062026",
+          "inv": [
+            {
+              "inum": "PIO/26-27/1003",
+              "dt": "04-06-2026",
+              "val": 445686,
+              "pos": "36",
+              "rev": "N",
+              "itcavl": "Y",
+              "rsn": "",
+              "items": [
+                {
+                  "rt": 18,
+                  "txval": 377700,
+                  "igst": 67986,
+                  "cgst": 0,
+                  "sgst": 0,
+                  "cess": 0
+                }
+              ]
+            },
+            {
+              "inum": "PIO/26-27/1007",
+              "dt": "26-06-2026",
+              "val": 525336,
+              "pos": "36",
+              "rev": "N",
+              "itcavl": "Y",
+              "rsn": "",
+              "items": [
+                {
+                  "rt": 18,
+                  "txval": 445200,
+                  "igst": 80136,
+                  "cgst": 0,
+                  "sgst": 0,
+                  "cess": 0
+                }
+              ]
+            },
+            {
+              "inum": "PIO/26-27/1008",
+              "dt": "15-06-2026",
+              "val": 410994,
+              "pos": "36",
+              "rev": "N",
+              "itcavl": "Y",
+              "rsn": "",
+              "items": [
+                {
+                  "rt": 18,
+                  "txval": 348300,
+                  "igst": 62694,
+                  "cgst": 0,
+                  "sgst": 0,
+                  "cess": 0
+                }
+              ]
+            },
+            {
+              "inum": "PIO/26-27/1016",
+              "dt": "25-06-2026",
+              "val": 267860,
+              "pos": "36",
+              "rev": "N",
+              "itcavl": "Y",
+              "rsn": "",
+              "items": [
+                {
+                  "rt": 18,
+                  "txval": 227000,
+                  "igst": 40860,
+                  "cgst": 0,
+                  "sgst": 0,
+                  "cess": 0
+                }
+              ]
+            },
+            {
+              "inum": "PIO/26-27/1034",
+              "dt": "26-06-2026",
+              "val": 163076,
+              "pos": "36",
+              "rev": "N",
+              "itcavl": "Y",
+              "rsn": "",
+              "items": [
+                {
+                  "rt": 18,
+                  "txval": 138200,
+                  "igst": 24876,
+                  "cgst": 0,
+                  "sgst": 0,
+                  "cess": 0
+                }
+              ]
+            },
+            {
+              "inum": "PIO/26-27/1040",
+              "dt": "10-06-2026",
+              "val": 65962,
+              "pos": "36",
+              "rev": "N",
+              "itcavl": "Y",
+              "rsn": "",
+              "items": [
+                {
+                  "rt": 18,
+                  "txval": 55900,
+                  "igst": 10062,
+                  "cgst": 0,
+                  "sgst": 0,
+                  "cess": 0
+                }
+              ]
+            },
+            {
+              "inum": "PIO/26-27/1041",
+              "dt": "20-06-2026",
+              "val": 413708,
+              "pos": "36",
+              "rev": "N",
+              "itcavl": "Y",
+              "rsn": "",
+              "items": [
+                {
+                  "rt": 18,
+                  "txval": 350600,
+                  "igst": 63108,
+                  "cgst": 0,
+                  "sgst": 0,
+                  "cess": 0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ctin": "19TEWCP6546M2ZI",
+          "trdnm": "Lumina & Associates, Chartered Accountants",
+          "supprd": "062026",
+          "inv": [
+            {
+              "inum": "LUM/26-27/1004",
+              "dt": "26-06-2026",
+              "val": 663160,
+              "pos": "19",
+              "rev": "N",
+              "itcavl": "Y",
+              "rsn": "",
+              "items": [
+                {
+                  "rt": 18,
+                  "txval": 562000,
+                  "igst": 101160,
+                  "cgst": 0,
+                  "sgst": 0,
+                  "cess": 0
+                }
+              ]
+            },
+            {
+              "inum": "LUM/26-27/1013",
+              "dt": "03-06-2026",
+              "val": 86140,
+              "pos": "19",
+              "rev": "N",
+              "itcavl": "Y",
+              "rsn": "",
+              "items": [
+                {
+                  "rt": 18,
+                  "txval": 73000,
+                  "igst": 13140,
+                  "cgst": 0,
+                  "sgst": 0,
+                  "cess": 0
+                }
+              ]
+            },
+            {
+              "inum": "LUM/26-27/1032",
+              "dt": "12-06-2026",
+              "val": 322966,
+              "pos": "19",
+              "rev": "N",
+              "itcavl": "Y",
+              "rsn": "",
+              "items": [
+                {
+                  "rt": 18,
+                  "txval": 273700,
+                  "igst": 49266,
+                  "cgst": 0,
+                  "sgst": 0,
+                  "cess": 0
+                }
+              ]
+            },
+            {
+              "inum": "LUM/26-27/1052",
+              "dt": "23-06-2026",
+              "val": 582566,
+              "pos": "19",
+              "rev": "N",
+              "itcavl": "Y",
+              "rsn": "",
+              "items": [
+                {
+                  "rt": 18,
+                  "txval": 493700,
+                  "igst": 88866,
+                  "cgst": 0,
+                  "sgst": 0,
+                  "cess": 0
+                }
+              ]
+            },
+            {
+              "inum": "LUM/26-27/1054",
+              "dt": "15-06-2026",
+              "val": 507282,
+              "pos": "19",
+              "rev": "N",
+              "itcavl": "Y",
+              "rsn": "",
+              "items": [
+                {
+                  "rt": 18,
+                  "txval": 429900,
+                  "igst": 77382,
+                  "cgst": 0,
+                  "sgst": 0,
+                  "cess": 0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ctin": "33RCLCI2718B6Z9",
+          "trdnm": "Meridian Travels Pvt Ltd",
+          "supprd": "062026",
+          "inv": [
+            {
+              "inum": "MER/26-27/1005",
+              "dt": "25-06-2026",
+              "val": 730128,
+              "pos": "33",
+              "rev": "N",
+              "itcavl": "Y",
+              "rsn": "",
+              "items": [
+                {
+                  "rt": 12,
+                  "txval": 651900,
+                  "igst": 78228,
+                  "cgst": 0,
+                  "sgst": 0,
+                  "cess": 0
+                }
+              ]
+            },
+            {
+              "inum": "MER/26-27/1020",
+              "dt": "16-06-2026",
+              "val": 861616,
+              "pos": "33",
+              "rev": "N",
+              "itcavl": "Y",
+              "rsn": "",
+              "items": [
+                {
+                  "rt": 12,
+                  "txval": 769300,
+                  "igst": 92316,
+                  "cgst": 0,
+                  "sgst": 0,
+                  "cess": 0
+                }
+              ]
+            },
+            {
+              "inum": "MER/26-27/1023",
+              "dt": "27-06-2026",
+              "val": 621600,
+              "pos": "33",
+              "rev": "N",
+              "itcavl": "Y",
+              "rsn": "",
+              "items": [
+                {
+                  "rt": 12,
+                  "txval": 555000,
+                  "igst": 66600,
+                  "cgst": 0,
+                  "sgst": 0,
+                  "cess": 0
+                }
+              ]
+            },
+            {
+              "inum": "MER/26-27/1027",
+              "dt": "26-06-2026",
+              "val": 668864,
+              "pos": "33",
+              "rev": "N",
+              "itcavl": "Y",
+              "rsn": "",
+              "items": [
+                {
+                  "rt": 12,
+                  "txval": 597200,
+                  "igst": 71664,
+                  "cgst": 0,
+                  "sgst": 0,
+                  "cess": 0
+                }
+              ]
+            },
+            {
+              "inum": "MER/26-27/1033",
+              "dt": "17-06-2026",
+              "val": 746144,
+              "pos": "33",
+              "rev": "N",
+              "itcavl": "Y",
+              "rsn": "",
+              "items": [
+                {
+                  "rt": 12,
+                  "txval": 666200,
+                  "igst": 79944,
+                  "cgst": 0,
+                  "sgst": 0,
+                  "cess": 0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ctin": "19PZLCK7985V6ZW",
+          "trdnm": "Zenith Software Labs Pvt Ltd",
+          "supprd": "062026",
+          "inv": [
+            {
+              "inum": "ZEN/26-27/1006",
+              "dt": "17-06-2026",
+              "val": 249098,
+              "pos": "19",
+              "rev": "N",
+              "itcavl": "Y",
+              "rsn": "",
+              "items": [
+                {
+                  "rt": 18,
+                  "txval": 211100,
+                  "igst": 37998,
+                  "cgst": 0,
+                  "sgst": 0,
+                  "cess": 0
+                }
+              ]
+            },
+            {
+              "inum": "ZEN/26-27/1024",
+              "dt": "26-06-2026",
+              "val": 567816,
+              "pos": "19",
+              "rev": "N",
+              "itcavl": "Y",
+              "rsn": "",
+              "items": [
+                {
+                  "rt": 18,
+                  "txval": 481200,
+                  "igst": 86616,
+                  "cgst": 0,
+                  "sgst": 0,
+                  "cess": 0
+                }
+              ]
+            },
+            {
+              "inum": "ZEN/26-27/1028",
+              "dt": "04-06-2026",
+              "val": 807592,
+              "pos": "19",
+              "rev": "N",
+              "itcavl": "Y",
+              "rsn": "",
+              "items": [
+                {
+                  "rt": 18,
+                  "txval": 684400,
+                  "igst": 123192,
+                  "cgst": 0,
+                  "sgst": 0,
+                  "cess": 0
+                }
+              ]
+            },
+            {
+              "inum": "ZEN/26-27/1037",
+              "dt": "14-06-2026",
+              "val": 187856,
+              "pos": "19",
+              "rev": "N",
+              "itcavl": "Y",
+              "rsn": "",
+              "items": [
+                {
+                  "rt": 18,
+                  "txval": 159200,
+                  "igst": 28656,
+                  "cgst": 0,
+                  "sgst": 0,
+                  "cess": 0
+                }
+              ]
+            },
+            {
+              "inum": "ZEN/26-27/1046",
+              "dt": "04-06-2026",
+              "val": 748710,
+              "pos": "19",
+              "rev": "N",
+              "itcavl": "Y",
+              "rsn": "",
+              "items": [
+                {
+                  "rt": 18,
+                  "txval": 634500,
+                  "igst": 114210,
+                  "cgst": 0,
+                  "sgst": 0,
+                  "cess": 0
+                }
+              ]
+            },
+            {
+              "inum": "ZEN/26-27/1047",
+              "dt": "20-06-2026",
+              "val": 522504,
+              "pos": "19",
+              "rev": "N",
+              "itcavl": "Y",
+              "rsn": "",
+              "items": [
+                {
+                  "rt": 18,
+                  "txval": 442800,
+                  "igst": 79704,
+                  "cgst": 0,
+                  "sgst": 0,
+                  "cess": 0
+                }
+              ]
+            },
+            {
+              "inum": "ZEN/26-27/1049",
+              "dt": "25-06-2026",
+              "val": 469994,
+              "pos": "19",
+              "rev": "N",
+              "itcavl": "Y",
+              "rsn": "",
+              "items": [
+                {
+                  "rt": 18,
+                  "txval": 398300,
+                  "igst": 71694,
+                  "cgst": 0,
+                  "sgst": 0,
+                  "cess": 0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ctin": "29ZPUCT0882Z9ZU",
+          "trdnm": "Sterling Estates & Holdings Pvt Ltd",
+          "supprd": "062026",
+          "inv": [
+            {
+              "inum": "STE/26-27/1009",
+              "dt": "21-06-2026",
+              "val": 58410,
+              "pos": "29",
+              "rev": "N",
+              "itcavl": "Y",
+              "rsn": "",
+              "items": [
+                {
+                  "rt": 18,
+                  "txval": 49500,
+                  "igst": 0,
+                  "cgst": 4455,
+                  "sgst": 4455,
+                  "cess": 0
+                }
+              ]
+            },
+            {
+              "inum": "STE/26-27/1021",
+              "dt": "23-06-2026",
+              "val": 440022,
+              "pos": "29",
+              "rev": "N",
+              "itcavl": "Y",
+              "rsn": "",
+              "items": [
+                {
+                  "rt": 18,
+                  "txval": 372900,
+                  "igst": 0,
+                  "cgst": 33561,
+                  "sgst": 33561,
+                  "cess": 0
+                }
+              ]
+            },
+            {
+              "inum": "STE/26-27/1042",
+              "dt": "19-06-2026",
+              "val": 450642,
+              "pos": "29",
+              "rev": "N",
+              "itcavl": "Y",
+              "rsn": "",
+              "items": [
+                {
+                  "rt": 18,
+                  "txval": 381900,
+                  "igst": 0,
+                  "cgst": 34371,
+                  "sgst": 34371,
+                  "cess": 0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ctin": "29EZHCD0667Y1ZZ",
+          "trdnm": "Stellar Stationers & Supplies",
+          "supprd": "062026",
+          "inv": [
+            {
+              "inum": "STE/26-27/1012",
+              "dt": "15-06-2026",
+              "val": 728532,
+              "pos": "29",
+              "rev": "N",
+              "itcavl": "Y",
+              "rsn": "",
+              "items": [
+                {
+                  "rt": 18,
+                  "txval": 617400,
+                  "igst": 0,
+                  "cgst": 55566,
+                  "sgst": 55566,
+                  "cess": 0
+                }
+              ]
+            },
+            {
+              "inum": "STE/26-27/1022",
+              "dt": "02-06-2026",
+              "val": 689592,
+              "pos": "29",
+              "rev": "N",
+              "itcavl": "Y",
+              "rsn": "",
+              "items": [
+                {
+                  "rt": 18,
+                  "txval": 584400,
+                  "igst": 0,
+                  "cgst": 52596,
+                  "sgst": 52596,
+                  "cess": 0
+                }
+              ]
+            },
+            {
+              "inum": "STE/26-27/1025",
+              "dt": "13-06-2026",
+              "val": 423974,
+              "pos": "29",
+              "rev": "N",
+              "itcavl": "Y",
+              "rsn": "",
+              "items": [
+                {
+                  "rt": 18,
+                  "txval": 359300,
+                  "igst": 0,
+                  "cgst": 32337,
+                  "sgst": 32337,
+                  "cess": 0
+                }
+              ]
+            },
+            {
+              "inum": "STE/26-27/1031",
+              "dt": "03-06-2026",
+              "val": 62776,
+              "pos": "29",
+              "rev": "N",
+              "itcavl": "Y",
+              "rsn": "",
+              "items": [
+                {
+                  "rt": 18,
+                  "txval": 53200,
+                  "igst": 0,
+                  "cgst": 4788,
+                  "sgst": 4788,
+                  "cess": 0
+                }
+              ]
+            },
+            {
+              "inum": "STE/26-27/1039",
+              "dt": "13-06-2026",
+              "val": 618202,
+              "pos": "29",
+              "rev": "N",
+              "itcavl": "Y",
+              "rsn": "",
+              "items": [
+                {
+                  "rt": 18,
+                  "txval": 523900,
+                  "igst": 0,
+                  "cgst": 47151,
+                  "sgst": 47151,
+                  "cess": 0
+                }
+              ]
+            },
+            {
+              "inum": "STE/26-27/1045",
+              "dt": "15-06-2026",
+              "val": 626816,
+              "pos": "29",
+              "rev": "N",
+              "itcavl": "Y",
+              "rsn": "",
+              "items": [
+                {
+                  "rt": 18,
+                  "txval": 531200,
+                  "igst": 0,
+                  "cgst": 47808,
+                  "sgst": 47808,
+                  "cess": 0
+                }
+              ]
+            },
+            {
+              "inum": "STE/26-27/1048",
+              "dt": "25-06-2026",
+              "val": 237416,
+              "pos": "29",
+              "rev": "N",
+              "itcavl": "Y",
+              "rsn": "",
+              "items": [
+                {
+                  "rt": 18,
+                  "txval": 201200,
+                  "igst": 0,
+                  "cgst": 18108,
+                  "sgst": 18108,
+                  "cess": 0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ctin": "29TIZCF2290F3Z0",
+          "trdnm": "Nimbus Tech Solutions Pvt Ltd",
+          "supprd": "062026",
+          "inv": [
+            {
+              "inum": "NIM/26-27/1014",
+              "dt": "23-06-2026",
+              "val": 735258,
+              "pos": "29",
+              "rev": "N",
+              "itcavl": "Y",
+              "rsn": "",
+              "items": [
+                {
+                  "rt": 18,
+                  "txval": 623100,
+                  "igst": 0,
+                  "cgst": 56079,
+                  "sgst": 56079,
+                  "cess": 0
+                }
+              ]
+            },
+            {
+              "inum": "NIM/26-27/1043",
+              "dt": "28-06-2026",
+              "val": 809598,
+              "pos": "29",
+              "rev": "N",
+              "itcavl": "Y",
+              "rsn": "",
+              "items": [
+                {
+                  "rt": 18,
+                  "txval": 686100,
+                  "igst": 0,
+                  "cgst": 61749,
+                  "sgst": 61749,
+                  "cess": 0
+                }
+              ]
+            },
+            {
+              "inum": "NIM/26-27/1044",
+              "dt": "16-06-2026",
+              "val": 43778,
+              "pos": "29",
+              "rev": "N",
+              "itcavl": "Y",
+              "rsn": "",
+              "items": [
+                {
+                  "rt": 18,
+                  "txval": 37100,
+                  "igst": 0,
+                  "cgst": 3339,
+                  "sgst": 3339,
+                  "cess": 0
+                }
+              ]
+            },
+            {
+              "inum": "NIM/26-27/1051",
+              "dt": "18-06-2026",
+              "val": 177236,
+              "pos": "29",
+              "rev": "N",
+              "itcavl": "Y",
+              "rsn": "",
+              "items": [
+                {
+                  "rt": 18,
+                  "txval": 150200,
+                  "igst": 0,
+                  "cgst": 13518,
+                  "sgst": 13518,
+                  "cess": 0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ctin": "29HOLCK5948I8ZM",
+          "trdnm": "Catalyst Media & Communications Pvt Ltd",
+          "supprd": "062026",
+          "inv": [
+            {
+              "inum": "CAT/26-27/1015",
+              "dt": "05-06-2026",
+              "val": 499258,
+              "pos": "29",
+              "rev": "N",
+              "itcavl": "Y",
+              "rsn": "",
+              "items": [
+                {
+                  "rt": 18,
+                  "txval": 423100,
+                  "igst": 0,
+                  "cgst": 38079,
+                  "sgst": 38079,
+                  "cess": 0
+                }
+              ]
+            },
+            {
+              "inum": "CAT/26-27/1017",
+              "dt": "27-06-2026",
+              "val": 830720,
+              "pos": "29",
+              "rev": "N",
+              "itcavl": "Y",
+              "rsn": "",
+              "items": [
+                {
+                  "rt": 18,
+                  "txval": 704000,
+                  "igst": 0,
+                  "cgst": 63360,
+                  "sgst": 63360,
+                  "cess": 0
+                }
+              ]
+            },
+            {
+              "inum": "CAT/26-27/1026",
+              "dt": "06-06-2026",
+              "val": 455598,
+              "pos": "29",
+              "rev": "N",
+              "itcavl": "Y",
+              "rsn": "",
+              "items": [
+                {
+                  "rt": 18,
+                  "txval": 386100,
+                  "igst": 0,
+                  "cgst": 34749,
+                  "sgst": 34749,
+                  "cess": 0
+                }
+              ]
+            },
+            {
+              "inum": "CAT/26-27/1036",
+              "dt": "03-06-2026",
+              "val": 866474,
+              "pos": "29",
+              "rev": "N",
+              "itcavl": "Y",
+              "rsn": "",
+              "items": [
+                {
+                  "rt": 18,
+                  "txval": 734300,
+                  "igst": 0,
+                  "cgst": 66087,
+                  "sgst": 66087,
+                  "cess": 0
+                }
+              ]
+            },
+            {
+              "inum": "CAT/26-27/1050",
+              "dt": "18-06-2026",
+              "val": 804524,
+              "pos": "29",
+              "rev": "N",
+              "itcavl": "Y",
+              "rsn": "",
+              "items": [
+                {
+                  "rt": 18,
+                  "txval": 681800,
+                  "igst": 0,
+                  "cgst": 61362,
+                  "sgst": 61362,
+                  "cess": 0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ctin": "29TESCG5999C3ZZ",
+          "trdnm": "Vertex Facility Management Pvt Ltd",
+          "supprd": "062026",
+          "inv": [
+            {
+              "inum": "VER/26-27/1030",
+              "dt": "06-06-2026",
+              "val": 595782,
+              "pos": "29",
+              "rev": "N",
+              "itcavl": "Y",
+              "rsn": "",
+              "items": [
+                {
+                  "rt": 18,
+                  "txval": 504900,
+                  "igst": 0,
+                  "cgst": 45441,
+                  "sgst": 45441,
+                  "cess": 0
+                }
+              ]
+            },
+            {
+              "inum": "VER/26-27/1038",
+              "dt": "26-06-2026",
+              "val": 451940,
+              "pos": "29",
+              "rev": "N",
+              "itcavl": "Y",
+              "rsn": "",
+              "items": [
+                {
+                  "rt": 18,
+                  "txval": 383000,
+                  "igst": 0,
+                  "cgst": 34470,
+                  "sgst": 34470,
+                  "cess": 0
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

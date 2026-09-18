@@ -30,8 +30,9 @@ def save_upload(firm_id: int, document_id: int, filename: str, data: bytes) -> s
     safe_name = Path(filename).name.replace(" ", "_")
     dest_dir = configured_upload_root() / str(firm_id) / str(document_id)
     dest_dir.mkdir(parents=True, exist_ok=True)
-    checksum = sha256_bytes(data)
-    dest = dest_dir / f"{checksum[:12]}_{safe_name}"
+    dest = dest_dir / safe_name
+    if dest.exists():
+        dest = dest_dir / f"{sha256_bytes(data)[:8]}_{safe_name}"
     dest.write_bytes(data)
     return str(dest)
 

@@ -2,14 +2,14 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from fastapi import APIRouter, Depends, File, HTTPException, UploadFile
+from fastapi import APIRouter, Depends, File, Form, HTTPException, UploadFile
 from fastapi.responses import FileResponse
 from sqlalchemy.orm import Session
 
 from app.audit import record_event, to_audit_out
 from app.db import get_db
 from app.deps import get_current_user, require_reviewer, require_staff
-from app.enums import AuditAction, DocumentStatus, Role
+from app.enums import AuditAction, DocumentStatus, DocumentType, Role
 from app.files import store_new_version
 from app.models import Document, User
 from app.queries import (
@@ -73,6 +73,54 @@ def create_document(
             action=AuditAction.CREATED,
             from_status=None,
             to_status=DocumentStatus.PENDING.value,
+        )
+    )
+    db.commit()
+    document = get_document_for_firm(db, user.firm_id, document.id)
+    return serialize_document(db, document)
+
+
+@router.post("/with-file", response_model=DocumentOut, status_code=201)
+async def create_document_with_file(
+    client_id: int = Form(...),
+    doc_type: str = Form(...),
+    file: UploadFile = File(...),
+    user: User = Depends(require_staff),
+    db: Session = Depends(get_db),
+) -> DocumentOut:
+    """Create + first upload in one request so the list shows filename and Uploaded."""
+    try:
+        parsed_type = DocumentType(doc_type)
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail="Unknown document type") from exc
+    client = get_client_for_firm(db, user.firm_id, client_id)
+    if client is None:
+        raise HTTPException(status_code=404, detail="Client not found")
+    document = Document(
+        client_id=client.id,
+        firm_id=user.firm_id,
+        doc_type=parsed_type.value,
+        current_status=DocumentStatus.PENDING.value,
+    )
+    db.add(document)
+    db.flush()
+    db.add(
+        record_event(
+            document=document,
+            actor=user,
+            action=AuditAction.CREATED,
+            from_status=None,
+            to_status=DocumentStatus.PENDING.value,
+        )
+    )
+    _version, action, from_status, to_status = await store_new_version(db, document, user, file)
+    db.add(
+        record_event(
+            document=document,
+            actor=user,
+            action=action,
+            from_status=from_status.value if from_status else None,
+            to_status=to_status.value,
         )
     )
     db.commit()
